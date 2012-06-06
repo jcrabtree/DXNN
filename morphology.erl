@@ -152,7 +152,7 @@ forex_trader(actuators)->
 	];
 forex_trader(sensors)->
 	LinearSensors=[#sensor{name=Name,id=fx_id,format=no_geo,tot_vl=HRes,parameters=[HRes,close]} ||
-		Name <- [fx_ListSensor],HRes<-[10]],
+		Name <- [fx_ListSensor],HRes<-[1]],
 	GraphSensors = [#sensor{name=fx_GraphSensor,id=fx_id,format={symetric,[HRes,VRes]},tot_vl=HRes*VRes,parameters=[HRes,VRes]} ||
 		HRes <-[100], VRes<-[100]],
 	InternalSensors = [#sensor{name=fx_Internals,id=fx_id,format=no_geo,tot_vl=3,parameters=[3]}],%[Long|Short|Void,Value]

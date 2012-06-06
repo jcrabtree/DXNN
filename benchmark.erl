@@ -18,12 +18,22 @@
 -define(BENCHMARK_MORPHOLOGIES,[forex_trader]).
 -define(DEFAULT_OPMODE,gt).
 -define(DEFAULT_ST,competition).
--define(INIT_CONSTRAINTS,[#constraint{morphology=Morphology,sc_types=SC_Types, sc_hypercube_plasticity=[none],sc_neural_linkform=LinkForm,neural_afs = [tanh]}|| Morphology<-[forex_trader],LinkForm<-[recursive], SC_Types<-[[neural]]]).
+-define(INIT_CONSTRAINTS,[#constraint{morphology=Morphology,sc_types=SC_Types, sc_hypercube_plasticity=[none],sc_neural_linkform=LinkForm}|| Morphology<-[forex_trader],LinkForm<-[recursive], SC_Types<-[[neural]]]).
 %-record(state,{pm_parameters,table_name,run_index=1,tot_evaluations=0,tot_generations=0,goal_status,tunning_status,success_acc=[],failure_acc=[],diversity_acc=[],trace_acc=[]}).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Starts and ends Neural Networks with various preset parameters and options, and polls the logger for information about each run.
 print_experiment(Experiment_Id)->
 	io:format("********~n~p~n*******",[mnesia:dirty_read({experiment,Experiment_Id})]).
+
+get_ekeys()->
+	io:format("--- Currently Stored Experiments ---~n"),
+	get_ekeys(mnesia:dirty_first(experiment)).
+	
+	get_ekeys('$end_of_table')->
+		ok;
+	get_ekeys(Key)->
+		io:format("~p~n",[Key]),
+		get_ekeys(mnesia:dirty_next(experiment,Key)).
 
 start(Id)->
 	PMP = #pmp{
