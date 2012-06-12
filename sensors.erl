@@ -981,9 +981,12 @@ fx_GraphSensor(CTVL,_SensorId,Parameters)->
 	case get(opmode) of
 		gt	->
 			%Normal, assuming we have 10000 rows, we start from 1000 to 6000
-			PId ! {self(),sense,'EURUSD15',close,[HRes,VRes,graph_sensor],1000,200};
+			PId ! {self(),sense,'EURUSD15',close,[HRes,VRes,graph_sensor],5000,1000};
 		benchmark ->
-			PId ! {self(),sense,'EURUSD15',close,[HRes,VRes,graph_sensor],200,last}
+			PId ! {self(),sense,'EURUSD15',close,[HRes,VRes,graph_sensor],999,500};
+		test ->
+			PId ! {self(),sense,'EURUSD15',close,[HRes,VRes,graph_sensor],499,last}
+			
 	end,
 	receive 
 		{_From,Result}->
@@ -1006,9 +1009,9 @@ fx_ListSensor(CTVL,_SensorId,Parameters)->
 			%Normal, assuming we have 10000 rows, we start from 1000 to 6000
 			PId ! {self(),sense,'EURUSD15',close,[HRes,list_sensor],5000,1000};
 		benchmark ->
-			PId ! {self(),sense,'EURUSD15',close,[HRes,list_sensor],1001,500};
+			PId ! {self(),sense,'EURUSD15',close,[HRes,list_sensor],999,500};
 		test ->
-			PId ! {self(),sense,'EURUSD15',close,[HRes,list_sensor],501,last}
+			PId ! {self(),sense,'EURUSD15',close,[HRes,list_sensor],499,last}
 	end,
 	receive 
 		{_From,Result}->
